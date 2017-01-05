@@ -186,24 +186,3 @@ def main():
             get_best_mods_multiprocess(weapon_name.upper(), int(num_mods), warframe_mods.rifle, riven=None)
     print('Completed in %s seconds' %str(clock()-a))
 
-# if __name__ == '__main__':
-#     print(message)
-#     assert 'out of date' not in message.lower()
-#     a = clock()
-#     weapon_name = input('Enter Weapon Name: ')
-#     num_mods = input('Enter Number of Mods to check (1-8) Use 7 if using Riven Mod:')
-#     use_riven = input('Use Riven Mod?(y/n):')
-#     ton_riv = [2, .4, 'multishot', .75, 'mag', 'tonkor riv not mine']
-#
-#     if weapon_name.upper() in pistols:
-#         if use_riven.upper() == 'Y':
-#             get_best_mods_multiprocess(weapon_name.upper(), int(num_mods), warframe_mods.pistol, riven= riven_to_use)
-#         else:
-#             get_best_mods_multiprocess(weapon_name.upper(), int(num_mods), warframe_mods.pistol, riven=None)
-#     else:
-#         if use_riven.upper() == 'Y':
-#             get_best_mods_multiprocess(weapon_name.upper(), int(num_mods), warframe_mods.rifle, riven = riven_to_use)
-#         else:
-#             get_best_mods_multiprocess(weapon_name.upper(), int(num_mods), warframe_mods.rifle, riven=None)
-#     print('Completed in %s seconds' %str(clock()-a))
-
