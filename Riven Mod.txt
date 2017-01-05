@@ -1,0 +1,14 @@
+Leave blank if no value.  Do not add spaces, just put the number after the colon for each stat that applies.
+Raw Damage:
+Crit Chance:
+Crit Damage:
+Fire Rate:
+Impact:
+Magazine Capacity:
+Multishot:.6
+Puncture:
+Reload Speed:
+Slash:
+Elemental-1:60
+Elemental-2:60
+Elemental-3:
