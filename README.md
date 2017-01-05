@@ -9,7 +9,7 @@ assertion gets text from google docs file to display at start up.  Main program 
 
 ###To use in python insetead of exe
 ####from max_dps import Weapon, weapons
-####boltor = Weapon(weapons['Boltor])
+####boltor = Weapon(weapons['Boltor'])
 add a mod
 ####boltor.mod(any mod found in warframe_mods.py)
 run calculation
