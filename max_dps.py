@@ -3,26 +3,27 @@ import itertools
 from time import clock, sleep
 from math import factorial
 import warframe_mods
-import testing
 from multiprocessing import Process, Queue, freeze_support
 import os
+import testing
 
 
+bows = ['CERNOS PRIME', 'PARIS PRIME', 'DREAD', 'CERNOS, RAKTA', 'CERNOS, MUTALIST', 'DAIKYU', 'CERNOS', 'PARIS', 'PARIS, MK1']
+
+burst_delay = {'BURSTON':.250, 'BURSTON PRIME': .200, 'HARPAK':.3, 'HIND':.3, 'PARACYST':.33, 'SYBARIS':.4, 'SYBARIS, DEX':.350, 'TIBERON':.216, 'SICARUS':.375, 'SICARUS PRIME':.290}
 
 #  Open worksheet - assign 1st col to dictionary - assign entire row to list for each col
 xl = open_workbook(os.path.dirname(os.path.abspath(__file__))+'/warframe_weapons.xlsx')
 sheet = xl.sheet_by_index(0)
 weapons = {}
-# backup has 92 rows (rifles)
 for rowt in range(170):
     row1 = sheet.row(rowt)
     temprow = []
     for each in row1:
         temprow.append(each.value)
-    # print(temprow)
     t = temprow
     try:
-        weapons.update({t[0]:[t[1],t[2],t[3],t[4],t[5],t[6],t[7],t[8],t[9],float(str(t[10]).replace('x','')),t[11],t[12],float(str(t[13]).replace('s',''))]})
+        weapons.update({t[0]:[t[1],t[2],t[3],t[4],t[5],t[6],t[7],t[8],t[9],float(str(t[10]).replace('x','')),t[11],t[12],float(str(t[13]).replace('s','')), t[14], t[0]]})
     except:
         pass
 
@@ -31,10 +32,14 @@ class Weapon:
 
     def __init__(self, dl):
         """dl is list from dictionary of weapons"""
-        self.impact = dl[2]
-        self.puncture = dl[3]
-        self.slash = dl[4]
-        self.ele = dl[5]
+        self.weapon_name = dl[-1]
+        self.impact = float(dl[2])
+        self.puncture = float(dl[3])
+        self.slash = float(dl[4])
+        try:
+            self.ele = float(dl[5])
+        except:
+            self.ele = dl[5]
         if self.ele == '-':
             self.ele = 0
         if self.ele == '':
@@ -47,7 +52,10 @@ class Weapon:
         self.mods = []
         self.multishot = 1
         self.bonus_ele = 0
-        # Initiate mod values (start 0) can use to clear later - faster than new instance of class
+        self.trigger_type = dl[-2]
+        if 'Charge' in self.trigger_type:
+            self.fire_rate = 1 / float(self.trigger_type[self.trigger_type.find('(')+1:self.trigger_type.find('s)')])
+        # Initiate mod values (start 0)
         self.clear_mods()
 
     # return sus for now to store
@@ -73,7 +81,6 @@ class Weapon:
         self.bonus_ele = 0
 
     def add_single(self, m):
-        # print('added', m)
         if m[2] == 'raw':
             self.mod_raw += m[1]
         if m[2] == 'impact':
@@ -95,7 +102,13 @@ class Weapon:
         if m[2] == 'mag':
             self.mod_mag += m[1]
         if m[2] == 'fire_rate':
-            self.mod_fire_rate += m[1]
+            if 'Charge' in self.trigger_type and self.weapon_name in bows:
+                if m[1] > 0:
+                    self.mod_fire_rate += (m[1] *2)
+                else:
+                    self.mod_fire_rate += m[1]
+            else:
+                self.mod_fire_rate += m[1]
 
     def mod(self, mod_list):
         for m in mod_list:
@@ -106,7 +119,9 @@ class Weapon:
             else:
                 self.add_single(m)
 
+
     def dps(self):
+
         # add mods only
         self.impact = self.impact * (1 + self.mod_raw)
         self.puncture = self.puncture * (1 + self.mod_raw)
@@ -114,7 +129,14 @@ class Weapon:
         self.ele = self.ele * (1 + self.mod_raw)
         self.c_chance = self.c_chance * (1 + self.mod_c_chance)
         self.c_dmg = self.c_dmg * (1 + self.mod_c_dmg)
-        self.fire_rate = self.fire_rate * (1 + self.mod_fire_rate)
+        if 'burst' in self.trigger_type.lower():
+            self.bullets_burst = float(self.trigger_type[self.trigger_type.find('(') + 1:self.trigger_type.find(')')])
+            self.burst_delay = burst_delay[self.weapon_name]
+            self.fire_rate = self.fire_rate * (1 + self.mod_fire_rate)
+            self.burst_delay = self.burst_delay / (1 + (self.mod_fire_rate / 2))
+            self.fire_rate = self.bullets_burst / (((self.bullets_burst - 1) / self.fire_rate) + self.burst_delay)
+        else:
+            self.fire_rate = self.fire_rate * (1 + self.mod_fire_rate)
         self.mag = round(self.mag * (1 + self.mod_mag))
         self.multishot = self.mod_multishot
         self.reload = self.reload / (1 + self.mod_reload)
@@ -141,6 +163,9 @@ class Weapon:
         self.bonus_ele *= 1 + self.mod_multishot
         # per shot
         self.damage_per_shot = self.impact + self.puncture + self.slash + self.bonus_ele + self.ele
+        # print(self.damage_per_shot, 'per shot')
+        if 'Charge' in self.trigger_type and self.weapon_name in bows:
+            self.mag = 1
         self.burst_dps = (self.damage_per_shot * self.mag) / (self.mag / self.fire_rate)
         self.sustained_dps = (self.damage_per_shot * self.mag) / ((self.mag / self.fire_rate) + self.reload)
 
@@ -193,6 +218,8 @@ def get_best_mods_multiprocess(gun, number_mods, mod_list, riven = None):
     print('---------------------'+str(best[0])+' Sustained DPS ---------------------')
     print('Mods:'+ ' '.join(each for each in best[1]))
     print()
+
+
 
 if __name__ == '__main__':
     freeze_support()
