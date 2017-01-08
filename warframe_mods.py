@@ -6,25 +6,25 @@ crash_course = [1, 1.2, 'impact', '-Crash Course-']
 critical_delay = [2, .48, 'c_chance', -.36, 'fire_rate', '-Critical Delay-']
 cryo_rounds = [1, .9, 'ele', '-Cryo Rounds reg-']
 fanged_fusillade = [1, 1.2, 'slash', '-Fanged Fusillade-']
-# fast_hands = [1, .3, 'reload', '-Fast Hands-']
+fast_hands = [1, .3, 'reload', '-Fast Hands reg-']
 hammer_shot = [1, .6, 'c_dmg', '-Hammer Shot-']
 heavy_caliber = [1, 1.65, 'raw', '-Heavy Caliber-']
 hellfire = [1, .9, 'ele', '-Hellfire-']
-high_voltage = [1, .6, 'ele', '-high_voltage-']
+high_voltage = [1, .6, 'ele', '-high voltage-']
 primed_cryo_rounds = [1, 1.65, 'ele', '-primed cryo rounds-']
-infected_clip = [1, .9, 'ele', '-infected_clip-']
-magazine_warp = [1, .3, 'mag', '-magazine_warp-']
-malignant_force = [1, .6, 'ele', '-malignant_force-']
-piercing_caliber = [1, 1.2, 'puncture', '-piercing_caliber-']
-piercing_hit = [1, .3, 'puncture', '-piercing_hit-']
+infected_clip = [1, .9, 'ele', '-infected clip-']
+magazine_warp = [1, .3, 'mag', '-magazine warp-']
+malignant_force = [1, .6, 'ele', '-malignant force-']
+piercing_caliber = [1, 1.2, 'puncture', '-piercing caliber-']
+piercing_hit = [1, .3, 'puncture', '-piercing hit-']
 point_strike = [1, 1.5, 'c_chance', '-point_strike-']
-primed_fast_hands = [1, .55, 'reload', '-primed_fast_hands-']
-rime_rounds = [1, .6, 'ele', '-rime_rounds-']
+primed_fast_hands = [1, .55, 'reload', '-primed fast hands-']
+rime_rounds = [1, .6, 'ele', '-rime rounds-']
 rupture = [1, .3, 'impact', '-rupture-']
-sawtooth_clip = [1, .3, 'slash', '-sawtooth_clip-']
+sawtooth_clip = [1, .3, 'slash', '-sawtooth clip-']
 serration = [1, 1.65, 'raw', '-serration-']
 shred = [1, .3, 'fire_rate', '-shred-']
-speed_trigger = [1, .6, 'fire_rate', '-speed_trigger-']
+speed_trigger = [1, .6, 'fire_rate', '-speed trigger-']
 split_chamber = [1, .9, 'multishot', '-split chamber-']
 stormbringer = [1, .9, 'ele', '-stormbringer-']
 thermite_rounds = [1, .6, 'ele', '-thermite_rounds-']
@@ -33,16 +33,6 @@ vital_sense = [1, 1.2, 'c_dmg', '-Vital Sense-']
 wildfire = [2, .2, 'mag', .6, 'ele', '-Wildfire-']
 
 rifle = [argon_scope, bladed_rounds,  crash_course, cryo_rounds, critical_delay,  fanged_fusillade, primed_fast_hands, hammer_shot, heavy_caliber, hellfire,  infected_clip, magazine_warp, piercing_caliber, piercing_hit, point_strike, rime_rounds, rupture, sawtooth_clip, serration, shred, speed_trigger, split_chamber, stormbringer, thermite_rounds, vile_acceleration, vital_sense, wildfire, primed_cryo_rounds, high_voltage, malignant_force]
-
-# rifle_no_primed_cryo = [argon_scope, bladed_rounds, crash_course, cryo_rounds, critical_delay,  fanged_fusillade, primed_fast_hands, hammer_shot, heavy_caliber, hellfire,  infected_clip, magazine_warp, piercing_caliber, piercing_hit, point_strike, rime_rounds, rupture, sawtooth_clip, serration, shred, speed_trigger, split_chamber, stormbringer, thermite_rounds, vile_acceleration, vital_sense, wildfire, high_voltage]
-#
-# rifle_no_low_ele = [argon_scope, bladed_rounds, crash_course, critical_delay,  fanged_fusillade, primed_fast_hands, hammer_shot, heavy_caliber, hellfire,  infected_clip, magazine_warp, piercing_caliber, piercing_hit, point_strike, rupture, sawtooth_clip, serration, shred, speed_trigger, split_chamber, stormbringer, vile_acceleration, vital_sense, wildfire, primed_cryo_rounds]
-#
-# rifle_no_argon_bladed = [crash_course, critical_delay,  fanged_fusillade, primed_fast_hands, hammer_shot, heavy_caliber, hellfire,  infected_clip, magazine_warp, piercing_caliber, piercing_hit, point_strike, rime_rounds, rupture, sawtooth_clip, serration, shred, speed_trigger, split_chamber, stormbringer, thermite_rounds, vile_acceleration, vital_sense, wildfire, primed_cryo_rounds, high_voltage]
-#
-# rifle_no_argon = [bladed_rounds, crash_course, critical_delay,  fanged_fusillade, primed_fast_hands, hammer_shot, heavy_caliber, hellfire,  infected_clip, magazine_warp, piercing_caliber, piercing_hit, point_strike, rime_rounds, rupture, sawtooth_clip, serration, shred, speed_trigger, split_chamber, stormbringer, thermite_rounds, vile_acceleration, vital_sense, wildfire, primed_cryo_rounds, high_voltage]
-#
-# rifle_no_split = [crash_course, critical_delay,  fanged_fusillade, primed_fast_hands, hammer_shot, heavy_caliber, hellfire,  infected_clip, magazine_warp, piercing_caliber, piercing_hit, point_strike, rime_rounds, rupture, sawtooth_clip, serration, shred, speed_trigger, stormbringer, thermite_rounds, vile_acceleration, vital_sense, wildfire, cryo_rounds, high_voltage]
 
 
 with open(os.path.dirname(os.path.abspath(__file__))+'\\exclude_mods.txt', 'r') as ex:
@@ -146,13 +136,3 @@ for mod in exclude:
     for each in shotgun:
         if mod in each[-1].upper().replace(' ', ''):
             shotgun.remove(each)
-
-
-
-
-
-
-
-
-
-
